@@ -1,5 +1,7 @@
 package com.example.vknewsclient.ui.elements
 
+import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,40 +17,52 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.vknewsclient.R
+import com.example.vknewsclient.domain.StatisticItem
+import com.example.vknewsclient.domain.StatisticType
 
 @Composable
 internal fun CardPanel(
-    seeCount: Int,
-    shareCount: Int,
-    commentCount: Int,
-    likeCount: Int,
+    statistics: List<StatisticItem>,
+    onViewsClickListener: (StatisticItem) -> Unit,
+    onShareClickListener: (StatisticItem) -> Unit,
+    onCommentClickListener: (StatisticItem) -> Unit,
+    onLikeClickListener: (StatisticItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    Log.d("TEST", "CardPanel")
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        val viewsItem = statistics.getItemByType(StatisticType.Views)
         IconWithText(
             iconResId = R.drawable.ic_views,
-            text = seeCount.toString()
+            text = viewsItem.count.toString(),
+            onItemClick = { onViewsClickListener.invoke(viewsItem) }
         )
 
         Spacer(modifier = Modifier.weight(1f))
 
+        val sharesItem = statistics.getItemByType(StatisticType.Shares)
         IconWithText(
             iconResId = R.drawable.ic_share,
-            text = shareCount.toString()
+            text = sharesItem.count.toString(),
+            onItemClick = { onShareClickListener.invoke(sharesItem) }
         )
 
+        val commentsItem = statistics.getItemByType(StatisticType.Comments)
         IconWithText(
             iconResId = R.drawable.ic_comment,
-            text = commentCount.toString()
+            text = commentsItem.count.toString(),
+            onItemClick = { onCommentClickListener.invoke(commentsItem) }
         )
 
+        val likesItem = statistics.getItemByType(StatisticType.Likes)
         IconWithText(
             iconResId = R.drawable.ic_like,
-            text = likeCount.toString()
+            text = likesItem.count.toString(),
+            onItemClick = { onLikeClickListener.invoke(likesItem) }
         )
     }
 }
@@ -57,12 +71,16 @@ internal fun CardPanel(
 private fun IconWithText(
     iconResId: Int,
     text: String,
-    modifier: Modifier = Modifier) {
-
+    onItemClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Log.d("TEST", "IconWithText")
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = modifier
+        modifier = modifier.clickable {
+            onItemClick.invoke()
+        }
     ) {
         Icon(
             painter = painterResource(iconResId),
@@ -76,4 +94,8 @@ private fun IconWithText(
             fontFamily = FontFamily.Monospace,
         )
     }
+}
+
+private fun List<StatisticItem>.getItemByType(type: StatisticType): StatisticItem {
+    return this.find { it.type == type } ?: throw IllegalStateException()
 }
