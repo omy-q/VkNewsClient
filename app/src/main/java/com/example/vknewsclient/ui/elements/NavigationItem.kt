@@ -1,10 +1,11 @@
-package com.example.vknewsclient
+package com.example.vknewsclient.ui.elements
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.example.vknewsclient.R
 import com.example.vknewsclient.navigation.Screen
 
 sealed class NavigationItem(

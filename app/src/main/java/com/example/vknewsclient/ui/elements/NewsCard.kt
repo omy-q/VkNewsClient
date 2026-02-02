@@ -1,6 +1,5 @@
 package com.example.vknewsclient.ui.elements
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -27,11 +26,10 @@ fun NewsCard(
     news: VkPost,
     onViewsClickListener: (StatisticItem) -> Unit,
     onShareClickListener: (StatisticItem) -> Unit,
-    onCommentClickListener: (StatisticItem) -> Unit,
+    onCommentClickListener: () -> Unit,
     onLikeClickListener: (StatisticItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Log.d("TEST", "NewsCard")
     Card(
         modifier = modifier,
         colors = CardColors(

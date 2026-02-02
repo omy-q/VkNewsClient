@@ -11,20 +11,28 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.vknewsclient.navigation.AppNavGraph
 import com.example.vknewsclient.navigation.rememberNavigationState
+import com.example.vknewsclient.ui.elements.NavigationItem
+import com.example.vknewsclient.ui.favorite.FavoriteScreen
+import com.example.vknewsclient.ui.home.HomeScreen
+import com.example.vknewsclient.ui.home.comments.CommentsScreen
+import com.example.vknewsclient.ui.profile.ProfileScreen
 
 @Composable
-fun MainScreen(
-    viewModel: MainViewModel,
-    modifier: Modifier = Modifier
-) {
+fun MainScreen(modifier: Modifier = Modifier) {
     Log.d("TEST", "MainScreen")
+
+    val commentsToPostId: MutableState<Int?> = remember { mutableStateOf(null) }
     val navigationState = rememberNavigationState()
+
     Scaffold(
         bottomBar = {
             val navBackStackEntry by navigationState.navHostController.currentBackStackEntryAsState()
@@ -36,10 +44,24 @@ fun MainScreen(
         },
         modifier = modifier.fillMaxSize()
     ) { innerPadding ->
-        Log.d("TEST", "Scaffold")
         AppNavGraph(
             navHostController = navigationState.navHostController,
-            homeScreenContent = { HomeScreen(viewModel) },
+            homeScreenContent = {
+                if (commentsToPostId.value == null) {
+                    HomeScreen(
+                        onCommentClickListener = {
+                            commentsToPostId.value = it
+                        }
+                    )
+                } else {
+                    CommentsScreen(
+                        postId = commentsToPostId.value!!,
+                        onBackPressed = {
+                            commentsToPostId.value = null
+                        }
+                    )
+                }
+            },
             favoriteScreenContent = { FavoriteScreen() },
             profileScreenContent = { ProfileScreen() },
             modifier = Modifier.padding(innerPadding)

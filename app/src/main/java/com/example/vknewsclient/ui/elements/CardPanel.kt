@@ -24,7 +24,7 @@ internal fun CardPanel(
     statistics: List<StatisticItem>,
     onViewsClickListener: (StatisticItem) -> Unit,
     onShareClickListener: (StatisticItem) -> Unit,
-    onCommentClickListener: (StatisticItem) -> Unit,
+    onCommentClickListener: () -> Unit,
     onLikeClickListener: (StatisticItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -53,7 +53,7 @@ internal fun CardPanel(
         IconWithText(
             iconResId = R.drawable.ic_comment,
             text = commentsItem.count.toString(),
-            onItemClick = { onCommentClickListener.invoke(commentsItem) }
+            onItemClick = onCommentClickListener
         )
 
         val likesItem = statistics.getItemByType(StatisticType.Likes)
