@@ -1,6 +1,5 @@
 package com.example.vknewsclient.ui.elements
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -29,7 +28,6 @@ internal fun CardPanel(
     onLikeClickListener: (StatisticItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Log.d("TEST", "CardPanel")
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -74,7 +72,6 @@ private fun IconWithText(
     onItemClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Log.d("TEST", "IconWithText")
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp),

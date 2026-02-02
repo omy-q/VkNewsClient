@@ -1,6 +1,5 @@
 package com.example.vknewsclient.ui.elements
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,7 +30,6 @@ internal fun CardTitle(
     date: String,
     modifier: Modifier = Modifier
 ) {
-    Log.d("TEST", "CardTitle")
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
