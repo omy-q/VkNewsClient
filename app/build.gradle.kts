@@ -4,14 +4,15 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
-    namespace = "com.example.vknewsclient"
+    namespace = "com.olya.milakina.vknewsclient"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.vknewsclient"
+        applicationId = "com.olya.milakina.vknewsclient"
         minSdk = 30
         targetSdk = 36
         versionCode = 1
@@ -58,6 +59,7 @@ dependencies {
     implementation(libs.androidx.navigation)
     implementation(libs.androidx.material.icons)
     implementation(libs.coil.compose)
+    implementation(libs.gson)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
