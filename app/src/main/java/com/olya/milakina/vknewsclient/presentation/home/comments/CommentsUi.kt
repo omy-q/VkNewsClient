@@ -1,4 +1,4 @@
-package com.olya.milakina.vknewsclient.ui.home.comments
+package com.olya.milakina.vknewsclient.presentation.home.comments
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,7 +22,7 @@ import com.olya.milakina.vknewsclient.ui.elements.PostCommentItem
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CommentsUi(
-    postId: Int,
+    postId: Long,
     comments: List<PostComment>,
     onBackPressed: () -> Unit,
     modifier: Modifier = Modifier

@@ -1,4 +1,4 @@
-package com.olya.milakina.vknewsclient.ui.home.comments
+package com.olya.milakina.vknewsclient.presentation.home.comments
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

@@ -1,4 +1,4 @@
-package com.olya.milakina.vknewsclient.ui.profile
+package com.olya.milakina.vknewsclient.presentation.profile
 
 import android.util.Log
 import androidx.compose.runtime.Composable

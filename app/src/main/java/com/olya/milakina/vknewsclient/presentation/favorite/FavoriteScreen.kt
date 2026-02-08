@@ -1,4 +1,4 @@
-package com.olya.milakina.vknewsclient.ui.favorite
+package com.olya.milakina.vknewsclient.presentation.favorite
 
 import android.util.Log
 import androidx.compose.runtime.Composable

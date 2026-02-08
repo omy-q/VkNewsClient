@@ -1,4 +1,4 @@
-package com.olya.milakina.vknewsclient.ui.home.comments
+package com.olya.milakina.vknewsclient.presentation.home.comments
 
 import android.util.Log
 import androidx.compose.runtime.Composable

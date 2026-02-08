@@ -1,5 +1,6 @@
 package com.olya.milakina.vknewsclient.ui.elements
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,8 +25,6 @@ import com.olya.milakina.vknewsclient.domain.StatisticItem
 @Composable
 fun NewsCard(
     news: Post,
-    onViewsClickListener: (StatisticItem) -> Unit,
-    onShareClickListener: (StatisticItem) -> Unit,
     onCommentClickListener: () -> Unit,
     onLikeClickListener: (StatisticItem) -> Unit,
     modifier: Modifier = Modifier
@@ -34,7 +33,7 @@ fun NewsCard(
         modifier = modifier,
         colors = CardColors(
             containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
             disabledContainerColor = MaterialTheme.colorScheme.primary,
             disabledContentColor = MaterialTheme.colorScheme.primary
         )
@@ -57,22 +56,25 @@ fun NewsCard(
                     .padding(top = 16.dp)
             )
 
-            AsyncImage(
-                model = news.contentImage,
-                placeholder = painterResource(R.drawable.ic_launcher_background),
-                error = painterResource(R.drawable.ic_launcher_background),
-                contentDescription = "",
-                contentScale = ContentScale.FillWidth,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .padding(vertical = 16.dp)
-            )
+            AnimatedVisibility(
+                visible = news.contentImage != null
+            ) {
+                AsyncImage(
+                    model = news.contentImage,
+                    placeholder = painterResource(R.drawable.ic_launcher_background),
+                    error = painterResource(R.drawable.ic_launcher_background),
+                    contentDescription = "",
+                    contentScale = ContentScale.FillWidth,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .padding(vertical = 16.dp)
+                )
+            }
 
             CardPanel(
                 statistics = news.statistics,
-                onViewsClickListener = onViewsClickListener,
-                onShareClickListener = onShareClickListener,
+                isLiked = news.isLiked,
                 onCommentClickListener = onCommentClickListener,
                 onLikeClickListener = onLikeClickListener
             )

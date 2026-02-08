@@ -1,4 +1,4 @@
-package com.olya.milakina.vknewsclient
+package com.olya.milakina.vknewsclient.presentation.main
 
 import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,11 +18,10 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.olya.milakina.vknewsclient.navigation.MainScreenNavGraph
 import com.olya.milakina.vknewsclient.navigation.rememberNavigationState
-import com.olya.milakina.vknewsclient.ui.elements.NavigationItem
-import com.olya.milakina.vknewsclient.ui.favorite.FavoriteScreen
-import com.olya.milakina.vknewsclient.ui.home.HomeScreen
-import com.olya.milakina.vknewsclient.ui.home.comments.CommentsScreen
-import com.olya.milakina.vknewsclient.ui.profile.ProfileScreen
+import com.olya.milakina.vknewsclient.presentation.favorite.FavoriteScreen
+import com.olya.milakina.vknewsclient.presentation.home.HomeScreen
+import com.olya.milakina.vknewsclient.presentation.home.comments.CommentsScreen
+import com.olya.milakina.vknewsclient.presentation.profile.ProfileScreen
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier) {

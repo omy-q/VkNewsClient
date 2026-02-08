@@ -1,4 +1,4 @@
-package com.olya.milakina.vknewsclient.ui.elements
+package com.olya.milakina.vknewsclient.presentation.main
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Favorite

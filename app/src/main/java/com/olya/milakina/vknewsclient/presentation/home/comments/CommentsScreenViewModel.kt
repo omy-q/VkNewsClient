@@ -1,4 +1,4 @@
-package com.olya.milakina.vknewsclient.ui.home.comments
+package com.olya.milakina.vknewsclient.presentation.home.comments
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -28,6 +28,4 @@ class CommentsScreenViewModel(post: Post) : ViewModel() {
 
         _screenState.value = CommentsScreenState.Comments(post, comments)
     }
-
-
 }

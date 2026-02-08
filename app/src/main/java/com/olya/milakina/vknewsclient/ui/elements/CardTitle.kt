@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -39,10 +40,11 @@ internal fun CardTitle(
             model = icon,
             placeholder = painterResource(R.drawable.ic_launcher_background),
             error = painterResource(R.drawable.ic_launcher_background),
+            contentScale = ContentScale.Crop,
             contentDescription = null,
             modifier = Modifier
-                .size(50.dp)
                 .clip(CircleShape)
+                .size(50.dp)
         )
 
         Column(

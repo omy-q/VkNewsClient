@@ -1,5 +1,6 @@
 package com.olya.milakina.vknewsclient.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -30,6 +31,7 @@ fun NavGraphBuilder.homeScreenNavGraph(
             )
         ) {
             val postJson = it.arguments?.getString(Screen.KEY_POST) ?: ""
+            Log.d("TEST", "args2 = $postJson")
             val post = Gson().fromJson(postJson, Post::class.java)
             commentsScreenContent.invoke(post)
         }
