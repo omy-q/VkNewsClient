@@ -4,6 +4,11 @@ import com.olya.milakina.vknewsclient.domain.PostComment
 import com.olya.milakina.vknewsclient.domain.Post
 
 sealed class CommentsScreenState {
-    object Initial: CommentsScreenState()
-    data class Comments(val post: Post, val comments: List<PostComment>) : CommentsScreenState()
+    object Initial : CommentsScreenState()
+    object Loading: CommentsScreenState()
+    object Empty: CommentsScreenState()
+    data class Comments(
+        val comments: List<PostComment>,
+        val nextDataIsLoading: Boolean = false
+    ) : CommentsScreenState()
 }

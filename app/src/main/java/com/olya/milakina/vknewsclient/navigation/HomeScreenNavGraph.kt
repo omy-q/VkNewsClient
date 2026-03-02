@@ -31,7 +31,6 @@ fun NavGraphBuilder.homeScreenNavGraph(
             )
         ) {
             val postJson = it.arguments?.getString(Screen.KEY_POST) ?: ""
-            Log.d("TEST", "args2 = $postJson")
             val post = Gson().fromJson(postJson, Post::class.java)
             commentsScreenContent.invoke(post)
         }

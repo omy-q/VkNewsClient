@@ -44,7 +44,7 @@ internal fun CardTitle(
             contentDescription = null,
             modifier = Modifier
                 .clip(CircleShape)
-                .size(50.dp)
+                .size(48.dp)
         )
 
         Column(

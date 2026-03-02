@@ -18,13 +18,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.olya.milakina.vknewsclient.R
 import com.olya.milakina.vknewsclient.domain.PostComment
-import com.olya.milakina.vknewsclient.ui.theme.VkNewsClientTheme
 
 @Composable
 fun PostCommentItem(
@@ -52,9 +51,9 @@ fun PostCommentItem(
                 placeholder = painterResource(R.drawable.ic_launcher_background),
                 error = painterResource(R.drawable.ic_launcher_background),
                 contentDescription = "",
-                contentScale = ContentScale.FillWidth,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(48.dp)
                     .clip(CircleShape)
             )
 
@@ -67,6 +66,8 @@ fun PostCommentItem(
                     color = MaterialTheme.colorScheme.onPrimary,
                     fontSize = 12.sp,
                     fontFamily = FontFamily.Serif,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
@@ -85,15 +86,5 @@ fun PostCommentItem(
                 )
             }
         }
-    }
-}
-
-@Preview
-@Composable
-private fun PostCommentPreview() {
-    VkNewsClientTheme(darkTheme = true) {
-        PostCommentItem(
-            comment = PostComment(id = 0)
-        )
     }
 }

@@ -1,8 +1,10 @@
-package com.olya.milakina.vknewsclient.data
+package com.olya.milakina.vknewsclient.data.posts
 
 import android.content.Context
-import com.olya.milakina.vknewsclient.data.model.getCount
-import com.olya.milakina.vknewsclient.data.model.toDomain
+import com.olya.milakina.vknewsclient.data.ApiFactory
+import com.olya.milakina.vknewsclient.data.SecurePrefs
+import com.olya.milakina.vknewsclient.data.getCount
+import com.olya.milakina.vknewsclient.data.posts.model.toDomain
 import com.olya.milakina.vknewsclient.domain.Post
 import com.olya.milakina.vknewsclient.domain.StatisticItem
 import com.olya.milakina.vknewsclient.domain.StatisticType
@@ -24,7 +26,7 @@ class PostsRepositoryImpl(context: Context) : PostRepository {
     private val prefs = SecurePrefs(context)
 
     private val deletedIds: MutableSet<Long> =
-        prefs.getSetLong(SecurePrefs.DELETED_IDS).toMutableSet()
+        prefs.getSetLong(SecurePrefs.Companion.DELETED_IDS).toMutableSet()
 
     override suspend fun loadPosts() {
         if (_hasNext) {
@@ -57,7 +59,7 @@ class PostsRepositoryImpl(context: Context) : PostRepository {
 
     override suspend fun deletePost(post: Post) {
         deletedIds.add(post.id)
-        prefs.putSetLong(SecurePrefs.DELETED_IDS, deletedIds)
+        prefs.putSetLong(SecurePrefs.Companion.DELETED_IDS, deletedIds)
         _posts.removeIf { deletedIds.contains(it.id) }
     }
 

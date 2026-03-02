@@ -1,4 +1,4 @@
-package com.olya.milakina.vknewsclient.data
+package com.olya.milakina.vknewsclient.data.posts
 
 import com.olya.milakina.vknewsclient.domain.Post
 

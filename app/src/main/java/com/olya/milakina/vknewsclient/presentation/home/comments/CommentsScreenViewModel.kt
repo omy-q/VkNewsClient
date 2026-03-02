@@ -3,29 +3,40 @@ package com.olya.milakina.vknewsclient.presentation.home.comments
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.olya.milakina.vknewsclient.domain.PostComment
+import androidx.lifecycle.viewModelScope
+import com.olya.milakina.vknewsclient.data.comments.CommentsRepository
+import com.olya.milakina.vknewsclient.data.comments.CommentsRepositoryImpl
 import com.olya.milakina.vknewsclient.domain.Post
+import kotlinx.coroutines.launch
 
-class CommentsScreenViewModel(post: Post) : ViewModel() {
+class CommentsScreenViewModel(val post: Post) : ViewModel() {
+
+    private val repository: CommentsRepository = CommentsRepositoryImpl()
     private val _screenState = MutableLiveData<CommentsScreenState>(CommentsScreenState.Initial)
     val screenState: LiveData<CommentsScreenState> = _screenState
 
     init {
-        loadComments(post)
+        loadComments()
     }
 
-    private fun loadComments(post: Post) {
-        val comments = mutableListOf<PostComment>().apply {
-            repeat(10) {
-                add(
-                    PostComment(
-                        id = it,
-                        authorName = "Author CommentId = $it"
-                    )
-                )
+    fun loadNextComments() {
+        if (repository.hasNext) {
+            _screenState.value = CommentsScreenState.Comments(repository.comments, true)
+            viewModelScope.launch {
+                loadComments()
             }
         }
+    }
 
-        _screenState.value = CommentsScreenState.Comments(post, comments)
+    private fun loadComments() {
+        viewModelScope.launch {
+            repository.loadComments(post)
+            val comments = repository.comments
+            if (comments.isEmpty()) {
+                _screenState.value = CommentsScreenState.Empty
+            } else {
+                _screenState.value = CommentsScreenState.Comments(repository.comments)
+            }
+        }
     }
 }

@@ -1,9 +1,9 @@
 package com.olya.milakina.vknewsclient.domain
 
 data class PostComment(
-    val id: Int,
-    val authorName: String = "AuthorName",
-    val authorIcon: String? = null,
-    val commentText: String = "zdrfgadrg ardega zerg hadth zseth aet ha DSRgz ZDfbhzx",
-    val publicationDate: String = "14:08"
+    val id: Long,
+    val authorName: String,
+    val authorIcon: String?,
+    val commentText: String,
+    val publicationDate: String
 )

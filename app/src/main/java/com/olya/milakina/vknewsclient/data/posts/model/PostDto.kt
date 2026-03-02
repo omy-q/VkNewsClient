@@ -1,6 +1,8 @@
-package com.olya.milakina.vknewsclient.data.model
+package com.olya.milakina.vknewsclient.data.posts.model
 
 import com.google.gson.annotations.SerializedName
+import com.olya.milakina.vknewsclient.data.getCount
+import com.olya.milakina.vknewsclient.data.toDomainDate
 import com.olya.milakina.vknewsclient.domain.Post
 import com.olya.milakina.vknewsclient.domain.StatisticItem
 import com.olya.milakina.vknewsclient.domain.StatisticType
@@ -9,7 +11,7 @@ import java.util.Locale
 import java.util.TimeZone
 import kotlin.random.Random
 
-data class PostDto(
+internal data class PostDto(
     @SerializedName("author") val author: String?,
     @SerializedName("title") val title: String,
     @SerializedName("description") val description: String?,
@@ -17,9 +19,10 @@ data class PostDto(
     @SerializedName("publishedAt") val publicationDate: String
 )
 
-fun PostDto.toDomain(id: Long): Post {
+internal fun PostDto.toDomain(id: Long): Post {
     return Post(
         id = id,
+        authorName = author,
         title = this.title,
         titleIcon = getTitleIcon(),
         publicationDate = this.publicationDate.toDomainDate(),
@@ -35,7 +38,6 @@ fun PostDto.toDomain(id: Long): Post {
     )
 }
 
-internal fun getCount(): Int = Random.nextInt(0, 10_000)
 private fun getIsLiked(): Boolean = Random.nextBoolean()
 
 private fun getTitleIcon(): String? {
@@ -59,15 +61,4 @@ private fun getTitleIcon(): String? {
 
     val index = Random.nextInt(15)
     return avatars[index]
-}
-
-private fun String.toDomainDate(): String {
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ROOT)
-    inputFormat.timeZone = TimeZone.getTimeZone("UTC")
-
-    val outputFormat = SimpleDateFormat("d MMMM yyyy, hh:mm", Locale.getDefault())
-    outputFormat.timeZone = TimeZone.getDefault()
-
-    val date = inputFormat.parse(this)
-    return date?.let { outputFormat.format(it) } ?: ""
 }

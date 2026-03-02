@@ -5,8 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.olya.milakina.vknewsclient.data.PostRepository
-import com.olya.milakina.vknewsclient.data.PostsRepositoryImpl
+import com.olya.milakina.vknewsclient.data.posts.PostRepository
+import com.olya.milakina.vknewsclient.data.posts.PostsRepositoryImpl
 import com.olya.milakina.vknewsclient.domain.Post
 import kotlinx.coroutines.launch
 

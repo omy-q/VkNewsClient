@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
-object ApiFactory {
+internal object ApiFactory {
 
     private val okhttpClient = OkHttpClient.Builder()
         .addInterceptor(AuthInterceptor)
