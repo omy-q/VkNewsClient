@@ -3,4 +3,6 @@
     <string name="navigation_item_main">Главная</string>
     <string name="navigation_item_favourite">Избранное</string>
     <string name="navigation_item_profile">Профиль</string>
+    <string name="login_button">Войти</string>
+    <string name="comments_top_bar_title">Комментарии</string>
 </resources>
