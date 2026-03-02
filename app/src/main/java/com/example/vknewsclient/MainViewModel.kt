@@ -9,7 +9,7 @@ import com.example.vknewsclient.domain.VkPost
 class MainViewModel : ViewModel() {
 
     private val initialVkPosts = mutableListOf<VkPost>().apply {
-        repeat(500) {
+        repeat(50) {
             add(
                 VkPost(
                     id = it,
@@ -19,7 +19,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    private var _vkPosts = MutableLiveData<List<VkPost>>(initialVkPosts)
+    private val _vkPosts = MutableLiveData<List<VkPost>>(initialVkPosts)
     val vkPosts: LiveData<List<VkPost>> = _vkPosts
 
     fun updateStatisticCount(postId: Int, statisticItem: StatisticItem) {

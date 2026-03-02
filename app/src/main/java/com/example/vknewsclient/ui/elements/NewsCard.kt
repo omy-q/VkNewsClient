@@ -41,9 +41,7 @@ fun NewsCard(
             disabledContentColor = MaterialTheme.colorScheme.primary
         )
     ) {
-        Log.d("TEST", "Card")
         Column(modifier = Modifier.padding(16.dp)) {
-            Log.d("TEST", "Column")
             CardTitle(
                 icon = news.titleIcon,
                 title = news.title,
