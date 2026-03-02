@@ -6,7 +6,7 @@ import com.olya.milakina.vknewsclient.domain.PostComment
 
 internal data class CommentDto(
     @SerializedName("author") val author: String?,
-    @SerializedName("title") val text: String,
+    @SerializedName("title") val text: String?,
     @SerializedName("publishedAt") val publicationDate: String
 )
 
@@ -18,7 +18,7 @@ internal fun CommentDto.toDomain(
         id = id,
         authorName = author ?: "",
         authorIcon = authorIcon,
-        commentText = text,
+        commentText = text ?: "",
         publicationDate = publicationDate.toDomainDate()
     )
 }
