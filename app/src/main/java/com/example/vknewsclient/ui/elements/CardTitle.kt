@@ -1,5 +1,6 @@
 package com.example.vknewsclient.ui.elements
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,9 +28,10 @@ import com.example.vknewsclient.R
 internal fun CardTitle(
     icon: String?,
     title: String,
-    time: String,
+    date: String,
     modifier: Modifier = Modifier
 ) {
+    Log.d("TEST", "CardTitle")
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -59,7 +61,7 @@ internal fun CardTitle(
             )
 
             Text(
-                text = time,
+                text = date,
                 color = MaterialTheme.colorScheme.onSecondary,
                 fontSize = 12.sp,
                 fontFamily = FontFamily.Serif,
