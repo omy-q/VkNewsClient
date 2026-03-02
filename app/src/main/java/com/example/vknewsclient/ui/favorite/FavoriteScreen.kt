@@ -1,4 +1,4 @@
-package com.example.vknewsclient
+package com.example.vknewsclient.ui.favorite
 
 import android.util.Log
 import androidx.compose.runtime.Composable

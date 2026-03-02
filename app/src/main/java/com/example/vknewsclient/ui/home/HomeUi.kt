@@ -1,6 +1,5 @@
-package com.example.vknewsclient
+package com.example.vknewsclient.ui.home
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,18 +8,22 @@ import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.vknewsclient.domain.StatisticItem
+import com.example.vknewsclient.domain.VkPost
 import com.example.vknewsclient.ui.elements.NewsCard
 
 @Composable
-fun HomeScreen(
-    viewModel: MainViewModel,
+fun HomeUi(
+    posts: List<VkPost>,
+    onDeletePostListener: (id: Int) -> Unit,
+    onViewsClickListener: (postId: Int, statistics: StatisticItem) -> Unit,
+    onShareClickListener: (postId: Int, statistics: StatisticItem) -> Unit,
+    onCommentClickListener: (postId: Int) -> Unit,
+    onLikeClickListener: (postId: Int, statistics: StatisticItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val posts = viewModel.vkPosts.observeAsState(listOf())
-    Log.d("TEST", "HomeScreen")
     LazyColumn(
         modifier = modifier,
         contentPadding = PaddingValues(
@@ -31,7 +34,7 @@ fun HomeScreen(
         ),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        items(posts.value, key = { it.id }) { post ->
+        items(posts, key = { it.id }) { post ->
             val dismissState = rememberSwipeToDismissBoxState(
                 positionalThreshold = { it * 0.5f },
                 confirmValueChange = {
@@ -44,15 +47,15 @@ fun HomeScreen(
                 state = dismissState,
                 enableDismissFromEndToStart = true,
                 enableDismissFromStartToEnd = false,
-                onDismiss = { viewModel.deletePost(post.id) },
+                onDismiss = { onDeletePostListener.invoke(post.id) },
                 backgroundContent = {}
             ) {
                 NewsCard(
                     news = post,
-                    onViewsClickListener = { viewModel.updateStatisticCount(post.id, it) },
-                    onShareClickListener = { viewModel.updateStatisticCount(post.id, it) },
-                    onCommentClickListener = { viewModel.updateStatisticCount(post.id, it) },
-                    onLikeClickListener = { viewModel.updateStatisticCount(post.id, it) }
+                    onViewsClickListener = { onViewsClickListener.invoke(post.id, it) },
+                    onShareClickListener = { onShareClickListener.invoke(post.id, it) },
+                    onCommentClickListener = { onCommentClickListener.invoke(post.id) },
+                    onLikeClickListener = { onLikeClickListener.invoke(post.id, it) }
                 )
             }
         }
