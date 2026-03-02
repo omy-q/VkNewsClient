@@ -4,10 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.ui.Modifier
 import com.example.vknewsclient.ui.elements.NewsCard
 import com.example.vknewsclient.ui.theme.VkNewsClientTheme
 
@@ -17,7 +13,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             VkNewsClientTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                MainScreen {
                     NewsCard(
                         titleIcon = null,
                         title = "уволено",
@@ -27,8 +23,7 @@ class MainActivity : ComponentActivity() {
                         seeCount = 206,
                         shareCount = 206,
                         commentCount = 11,
-                        likeCount = 491,
-                        modifier = Modifier.padding(innerPadding)
+                        likeCount = 491
                     )
                 }
             }
