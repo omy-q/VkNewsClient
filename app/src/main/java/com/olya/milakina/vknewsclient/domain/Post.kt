@@ -1,7 +1,9 @@
 package com.olya.milakina.vknewsclient.domain
 
+import java.util.UUID
+
 data class Post(
-    val id: Long,
+    val id: UUID,
     val authorName: String?,
     val title: String,
     val titleIcon: String?,

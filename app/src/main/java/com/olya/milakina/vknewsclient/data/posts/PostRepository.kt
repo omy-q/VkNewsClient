@@ -1,13 +1,14 @@
 package com.olya.milakina.vknewsclient.data.posts
 
 import com.olya.milakina.vknewsclient.domain.Post
+import com.olya.milakina.vknewsclient.PaginationState
+import kotlinx.coroutines.flow.StateFlow
 
 interface PostRepository {
 
-    val posts: List<Post>
-    val hasNext: Boolean
+    val postsFlow: StateFlow<PaginationState<Post>>
 
-    suspend fun loadPosts()
+    suspend fun loadNextPosts()
 
     suspend fun changeLikeStatus(post: Post)
 

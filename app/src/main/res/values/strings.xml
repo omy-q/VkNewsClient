@@ -5,4 +5,5 @@
     <string name="navigation_item_profile">Профиль</string>
     <string name="login_button">Войти</string>
     <string name="comments_top_bar_title">Комментарии</string>
+    <string name="common_error">Что-то пошло не так, повторите попытку позже</string>
 </resources>

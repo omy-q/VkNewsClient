@@ -9,8 +9,6 @@ internal data class PostsDto(
     @SerializedName("articles") val posts: List<PostDto>?
 )
 
-internal fun PostsDto.toDomain(count: Int): List<Post> {
-    return this.posts?.mapIndexed { index, post ->
-        post.toDomain(id = ((index * count).toLong()))
-    } ?: listOf()
+internal fun PostsDto.toDomain(): List<Post> {
+    return this.posts?.map { it.toDomain() } ?: listOf()
 }

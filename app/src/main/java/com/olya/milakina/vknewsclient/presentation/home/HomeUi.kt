@@ -43,9 +43,12 @@ fun HomeUi(
     ) {
         items(posts, key = { it.id }) { post ->
             val dismissState = rememberSwipeToDismissBoxState(
-                positionalThreshold = { it * 0.5f },
+                positionalThreshold = { it * 1f },
                 confirmValueChange = {
-                    it in setOf(SwipeToDismissBoxValue.EndToStart)
+                    if (it == SwipeToDismissBoxValue.EndToStart) {
+                        onDeletePostListener.invoke(post)
+                    }
+                    false
                 }
             )
 
@@ -54,7 +57,6 @@ fun HomeUi(
                 state = dismissState,
                 enableDismissFromEndToStart = true,
                 enableDismissFromStartToEnd = false,
-                onDismiss = { onDeletePostListener.invoke(post) },
                 backgroundContent = {}
             ) {
                 NewsCard(

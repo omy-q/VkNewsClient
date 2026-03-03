@@ -28,17 +28,7 @@ class SecurePrefs(context: Context) {
         return prefs.getBoolean(key, default)
     }
 
-    fun putSetLong(key: String, value: Set<Long>) {
-        prefs.edit { putStringSet(key, value.map { it.toString() }.toSet()) }
-    }
-
-    fun getSetLong(key: String): Set<Long> {
-        val stringSet = prefs.getStringSet(key, setOf<String>())
-        return stringSet?.mapNotNull { it.toLongOrNull() }?.toSet() ?: setOf()
-    }
-
     companion object {
         const val IS_AUTHORIZED = "is_authorised"
-        const val DELETED_IDS = "deleted_ids"
     }
 }

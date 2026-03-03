@@ -1,61 +1,92 @@
 package com.olya.milakina.vknewsclient.presentation.home
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.olya.milakina.vknewsclient.data.posts.PostRepository
 import com.olya.milakina.vknewsclient.data.posts.PostsRepositoryImpl
 import com.olya.milakina.vknewsclient.domain.Post
+import com.olya.milakina.vknewsclient.PaginationState
+import com.olya.milakina.vknewsclient.mergeWith
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class HomeScreenViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: PostRepository = PostsRepositoryImpl(application)
-    private val _screenState = MutableLiveData<HomeScreenState>(HomeScreenState.Initial)
-    val screenState: LiveData<HomeScreenState> = _screenState
-
-    private var isChangeLikeLoading: Boolean = false
-
-    init {
-        _screenState.value = HomeScreenState.Loading
-        loadPosts()
+    private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
+        isChangeLikeLoading = false
+        showToastErrorEvent.tryEmit(Unit)
     }
 
-    fun loadNextPosts() {
-        if (repository.hasNext) {
-            _screenState.value = HomeScreenState.Posts(repository.posts, true)
-            viewModelScope.launch {
-                loadPosts()
-            }
+    private val showToastErrorEvent = MutableSharedFlow<Unit>(replay = 1)
+    private val showToastErrorFlow = flow {
+        showToastErrorEvent.collect {
+            emit(
+                HomeScreenState.Posts(posts, showToastError = true)
+            )
+            delay(200)
+            emit(HomeScreenState.Posts(posts))
         }
     }
+    private var isChangeLikeLoading: Boolean = false
+    private var posts: List<Post> = listOf()
 
-    private fun loadPosts() {
+    val screenState = repository.postsFlow
+        .map {
+            when (it) {
+                is PaginationState.FirstPageLoading -> {
+                    HomeScreenState.Loading
+                }
+
+                is PaginationState.NextPageLoading -> {
+                    HomeScreenState.Posts(posts, nextDataIsLoading = true)
+                }
+
+                is PaginationState.PageLoaded -> {
+                    posts = it.data
+                    HomeScreenState.Posts(it.data, nextDataIsLoading = false)
+                }
+
+                is PaginationState.AllPagesLoaded -> {
+                    posts = it.data
+                    HomeScreenState.Posts(it.data, nextDataIsLoading = false)
+                }
+
+                is PaginationState.FailureLoading -> {
+                    HomeScreenState.CommonError
+                }
+            }
+        }
+        .onStart { emit(HomeScreenState.Loading) }
+        .mergeWith(showToastErrorFlow)
+
+    fun loadNextPosts() {
         viewModelScope.launch {
-            repository.loadPosts()
-            _screenState.value = HomeScreenState.Posts(repository.posts)
+            repository.loadNextPosts()
         }
     }
 
     fun changeLikeStatus(post: Post) {
         if (!isChangeLikeLoading) {
             isChangeLikeLoading = true
-            viewModelScope.launch {
+            viewModelScope.launch(exceptionHandler) {
                 repository.changeLikeStatus(post)
-                _screenState.value = HomeScreenState.Posts(repository.posts)
                 isChangeLikeLoading = false
             }
         }
     }
 
     fun deletePost(post: Post) {
-        val currentState = _screenState.value
-        if (currentState !is HomeScreenState.Posts) return
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             repository.deletePost(post)
-            _screenState.value = HomeScreenState.Posts(repository.posts)
         }
     }
 }

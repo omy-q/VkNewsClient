@@ -9,6 +9,7 @@ import com.olya.milakina.vknewsclient.domain.StatisticType
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
+import java.util.UUID
 import kotlin.random.Random
 
 internal data class PostDto(
@@ -19,9 +20,9 @@ internal data class PostDto(
     @SerializedName("publishedAt") val publicationDate: String
 )
 
-internal fun PostDto.toDomain(id: Long): Post {
+internal fun PostDto.toDomain(): Post {
     return Post(
-        id = id,
+        id = UUID.randomUUID(),
         authorName = author,
         title = this.title,
         titleIcon = getTitleIcon(),
