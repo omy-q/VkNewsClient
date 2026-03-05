@@ -4,8 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.olya.milakina.vknewsclient.domain.AuthState
 import com.olya.milakina.vknewsclient.presentation.login.LoginScreen
 import com.olya.milakina.vknewsclient.ui.theme.VkNewsClientTheme
 
@@ -17,7 +18,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             VkNewsClientTheme {
                 val viewModel: MainViewModel = viewModel()
-                val authState = viewModel.authState.observeAsState(AuthState.UnAuthorized)
+                val authState = viewModel.authState.collectAsState(AuthState.UnAuthorized)
                 when (authState.value) {
                     AuthState.Authorized -> {
                         MainScreen()
