@@ -1,12 +1,10 @@
 package com.olya.milakina.vknewsclient.data.posts
 
-import android.content.Context
+import com.olya.milakina.vknewsclient.PaginationState
 import com.olya.milakina.vknewsclient.data.ApiFactory
-import com.olya.milakina.vknewsclient.data.SecurePrefs
 import com.olya.milakina.vknewsclient.data.getCount
 import com.olya.milakina.vknewsclient.data.posts.model.toDomain
 import com.olya.milakina.vknewsclient.domain.Post
-import com.olya.milakina.vknewsclient.PaginationState
 import com.olya.milakina.vknewsclient.domain.StatisticItem
 import com.olya.milakina.vknewsclient.domain.StatisticType
 import com.olya.milakina.vknewsclient.mergeWith
@@ -21,7 +19,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.retry
 import kotlinx.coroutines.flow.stateIn
 
-class PostsRepositoryImpl(context: Context) : PostRepository {
+class PostsRepositoryImpl : PostRepository {
 
     private val api = ApiFactory.apiService
 

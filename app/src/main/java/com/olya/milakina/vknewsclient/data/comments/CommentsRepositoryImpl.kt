@@ -1,43 +1,70 @@
 package com.olya.milakina.vknewsclient.data.comments
 
+import com.olya.milakina.vknewsclient.PaginationState
 import com.olya.milakina.vknewsclient.data.ApiFactory
 import com.olya.milakina.vknewsclient.data.comments.model.toDomain
 import com.olya.milakina.vknewsclient.domain.Post
 import com.olya.milakina.vknewsclient.domain.PostComment
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.retry
 
 class CommentsRepositoryImpl : CommentsRepository {
 
     private val api = ApiFactory.apiService
 
-    private val _comments = mutableListOf<PostComment>()
-    override val comments: List<PostComment>
-        get() = _comments.toList()
-
-    private var _hasNext: Boolean = true
-    override val hasNext: Boolean
-        get() = _hasNext
-
     private var currentPage: Int = 1
-    private var currentPageId: Int = 1
+    private var hasNext: Boolean = true
 
-    override suspend fun loadComments(post: Post) {
-        if (_hasNext) {
-            val newPosts = api.getComments(
-                page = currentPage,
-                pageSize = PAGE_SIZE,
-                query = post.authorName ?: post.title
-            ).toDomain(
-                count = currentPageId,
-                authorIcon = post.titleIcon
-            )
-            _comments.addAll(newPosts)
-            currentPage++
-            currentPageId += newPosts.size
-            _hasNext = newPosts.size == PAGE_SIZE
+    private val _comments = mutableListOf<PostComment>()
+    private val comments get() = _comments.toList()
+
+    private val nextDataEvents = MutableSharedFlow<Unit>(replay = 1)
+
+
+    override fun loadComments(post: Post): Flow<PaginationState<PostComment>> = flow {
+        nextDataEvents.emit(Unit)
+        nextDataEvents.collect {
+            if (comments.isEmpty()) {
+                emit(PaginationState.FirstPageLoading())
+            }
+
+            if (hasNext) {
+                if (comments.isNotEmpty()) {
+                    emit(PaginationState.NextPageLoading())
+                }
+
+                val newComments = api.getComments(
+                    page = currentPage,
+                    pageSize = PAGE_SIZE,
+                    query = post.authorName ?: post.title
+                ).toDomain(post.titleIcon)
+
+                _comments.addAll(newComments)
+                currentPage++
+                hasNext = newComments.size == PAGE_SIZE
+                emit(PaginationState.PageLoaded(comments))
+            } else {
+                emit(PaginationState.AllPagesLoaded(comments))
+            }
         }
+    }.retry(RETRIES_COUNT) {
+        delay(RETRY_TIMEOUT_MILLIS)
+        true
+    }.catch {
+        emit(PaginationState.FailureLoading(it))
+    }
+
+    override suspend fun loadNextComments() {
+        nextDataEvents.emit(Unit)
     }
 
     companion object {
-        private const val PAGE_SIZE = 15
+        private const val PAGE_SIZE = 8
+        private const val RETRIES_COUNT = 2L
+        private const val RETRY_TIMEOUT_MILLIS = 3000L
     }
 }

@@ -9,11 +9,6 @@ internal data class CommentsDto(
     @SerializedName("articles") val posts: List<CommentDto>?
 )
 
-internal fun CommentsDto.toDomain(count: Int, authorIcon: String?): List<PostComment> {
-    return this.posts?.mapIndexed { index, comment ->
-        comment.toDomain(
-            id = ((index * count).toLong()),
-            authorIcon = authorIcon
-        )
-    } ?: listOf()
+internal fun CommentsDto.toDomain(authorIcon: String?): List<PostComment> {
+    return this.posts?.map { it.toDomain(authorIcon) } ?: listOf()
 }

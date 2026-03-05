@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.olya.milakina.vknewsclient.R
 import com.olya.milakina.vknewsclient.domain.Post
 import com.olya.milakina.vknewsclient.ui.theme.DarkBlue
 
@@ -25,7 +28,7 @@ fun CommentsScreen(
         factory = CommentsScreenViewModelFactory(post),
         key = "postId = ${post.id}"
     )
-    val state = viewModel.screenState.observeAsState(CommentsScreenState.Initial)
+    val state = viewModel.screenState.collectAsState(CommentsScreenState.Initial)
     when(val currentState = state.value) {
         is CommentsScreenState.Comments -> {
             CommentsUi(
@@ -51,7 +54,22 @@ fun CommentsScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = "No comments now")
+                Text(
+                    text = stringResource(R.string.comments_empty_state),
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+
+        is CommentsScreenState.CommonError -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(R.string.common_error),
+                    textAlign = TextAlign.Center
+                )
             }
         }
 

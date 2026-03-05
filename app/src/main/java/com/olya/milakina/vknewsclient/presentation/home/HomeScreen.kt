@@ -58,8 +58,6 @@ fun HomeScreen(
             }
         }
 
-        is HomeScreenState.Initial -> {}
-
         is HomeScreenState.CommonError -> {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -71,5 +69,7 @@ fun HomeScreen(
                 )
             }
         }
+
+        is HomeScreenState.Initial -> {}
     }
 }

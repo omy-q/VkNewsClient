@@ -6,9 +6,6 @@ import com.olya.milakina.vknewsclient.data.toDomainDate
 import com.olya.milakina.vknewsclient.domain.Post
 import com.olya.milakina.vknewsclient.domain.StatisticItem
 import com.olya.milakina.vknewsclient.domain.StatisticType
-import java.text.SimpleDateFormat
-import java.util.Locale
-import java.util.TimeZone
 import java.util.UUID
 import kotlin.random.Random
 
