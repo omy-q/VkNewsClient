@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.olya.milakina.vknewsclient.R
-import com.olya.milakina.vknewsclient.domain.PostComment
+import com.olya.milakina.vknewsclient.domain.entities.PostComment
 
 @Composable
 fun PostCommentItem(

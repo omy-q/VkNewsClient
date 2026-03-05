@@ -19,8 +19,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.olya.milakina.vknewsclient.R
-import com.olya.milakina.vknewsclient.domain.Post
-import com.olya.milakina.vknewsclient.domain.StatisticItem
+import com.olya.milakina.vknewsclient.domain.entities.Post
+import com.olya.milakina.vknewsclient.domain.entities.StatisticItem
 
 @Composable
 fun NewsCard(

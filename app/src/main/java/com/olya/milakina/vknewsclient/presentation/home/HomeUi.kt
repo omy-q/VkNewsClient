@@ -17,7 +17,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.olya.milakina.vknewsclient.domain.Post
+import com.olya.milakina.vknewsclient.domain.entities.Post
 import com.olya.milakina.vknewsclient.ui.elements.NewsCard
 import com.olya.milakina.vknewsclient.ui.theme.DarkBlue
 

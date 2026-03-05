@@ -1,6 +1,6 @@
 package com.olya.milakina.vknewsclient.presentation.home.comments
 
-import com.olya.milakina.vknewsclient.domain.PostComment
+import com.olya.milakina.vknewsclient.domain.entities.PostComment
 
 sealed class CommentsScreenState {
     object Initial : CommentsScreenState()

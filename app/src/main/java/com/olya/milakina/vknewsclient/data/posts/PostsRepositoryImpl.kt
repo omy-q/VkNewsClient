@@ -1,17 +1,17 @@
 package com.olya.milakina.vknewsclient.data.posts
 
-import com.olya.milakina.vknewsclient.PaginationState
 import com.olya.milakina.vknewsclient.data.ApiFactory
 import com.olya.milakina.vknewsclient.data.getCount
 import com.olya.milakina.vknewsclient.data.posts.model.toDomain
-import com.olya.milakina.vknewsclient.domain.Post
-import com.olya.milakina.vknewsclient.domain.StatisticItem
-import com.olya.milakina.vknewsclient.domain.StatisticType
+import com.olya.milakina.vknewsclient.domain.entities.PaginationState
+import com.olya.milakina.vknewsclient.domain.entities.Post
+import com.olya.milakina.vknewsclient.domain.entities.StatisticItem
+import com.olya.milakina.vknewsclient.domain.entities.StatisticType
+import com.olya.milakina.vknewsclient.domain.repositories.PostRepository
 import com.olya.milakina.vknewsclient.mergeWith
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
@@ -32,7 +32,7 @@ class PostsRepositoryImpl : PostRepository {
     private val posts get() = _posts.toList()
 
     private val scope = CoroutineScope(Dispatchers.IO)
-    private val loadedPostsFlow: Flow<PaginationState<Post>> = flow {
+    private val loadedPostsFlow = flow {
         nextDataEvents.emit(Unit)
         nextDataEvents.collect {
             if (posts.isEmpty()) {
@@ -70,11 +70,13 @@ class PostsRepositoryImpl : PostRepository {
     private val changePostsFlow = MutableSharedFlow<PaginationState<Post>>()
     private val nextDataEvents = MutableSharedFlow<Unit>(replay = 1)
 
-    override val postsFlow = loadedPostsFlow.mergeWith(changePostsFlow).stateIn(
+    private val postsFlow = loadedPostsFlow.mergeWith(changePostsFlow).stateIn(
         scope = scope,
         started = SharingStarted.Lazily,
         initialValue = PaginationState.FirstPageLoading()
     )
+
+    override fun loadPosts() = postsFlow
 
     override suspend fun loadNextPosts() {
         nextDataEvents.emit(Unit)

@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.olya.milakina.vknewsclient.domain.Post
+import com.olya.milakina.vknewsclient.domain.entities.Post
 
 @Composable
 fun MainScreenNavGraph(

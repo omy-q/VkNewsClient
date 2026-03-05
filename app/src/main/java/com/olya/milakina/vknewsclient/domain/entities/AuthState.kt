@@ -1,4 +1,4 @@
-package com.olya.milakina.vknewsclient.domain
+package com.olya.milakina.vknewsclient.domain.entities
 
 sealed interface AuthState {
     data object Authorized : AuthState

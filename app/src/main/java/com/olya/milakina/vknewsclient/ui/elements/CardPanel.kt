@@ -21,8 +21,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.olya.milakina.vknewsclient.R
-import com.olya.milakina.vknewsclient.domain.StatisticItem
-import com.olya.milakina.vknewsclient.domain.StatisticType
+import com.olya.milakina.vknewsclient.domain.entities.StatisticItem
+import com.olya.milakina.vknewsclient.domain.entities.StatisticType
 import com.olya.milakina.vknewsclient.ui.theme.DarkRed
 import java.util.Locale
 

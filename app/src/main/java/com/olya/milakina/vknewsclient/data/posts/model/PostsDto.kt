@@ -1,7 +1,7 @@
 package com.olya.milakina.vknewsclient.data.posts.model
 
 import com.google.gson.annotations.SerializedName
-import com.olya.milakina.vknewsclient.domain.Post
+import com.olya.milakina.vknewsclient.domain.entities.Post
 
 internal data class PostsDto(
     @SerializedName("status") val status: String?,

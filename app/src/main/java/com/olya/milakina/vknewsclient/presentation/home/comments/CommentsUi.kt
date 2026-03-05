@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.olya.milakina.vknewsclient.R
-import com.olya.milakina.vknewsclient.domain.PostComment
+import com.olya.milakina.vknewsclient.domain.entities.PostComment
 import com.olya.milakina.vknewsclient.ui.elements.PostCommentItem
 import com.olya.milakina.vknewsclient.ui.theme.DarkBlue
 

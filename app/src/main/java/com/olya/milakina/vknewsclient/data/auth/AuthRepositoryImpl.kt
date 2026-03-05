@@ -2,7 +2,8 @@ package com.olya.milakina.vknewsclient.data.auth
 
 import android.content.Context
 import com.olya.milakina.vknewsclient.data.SecurePrefs
-import com.olya.milakina.vknewsclient.domain.AuthState
+import com.olya.milakina.vknewsclient.domain.repositories.AuthRepository
+import com.olya.milakina.vknewsclient.domain.entities.AuthState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,7 +18,7 @@ class AuthRepositoryImpl(context: Context): AuthRepository {
     private val scope = CoroutineScope(Dispatchers.Default)
     private val checkAuthStateFlow = MutableSharedFlow<Unit>(replay = 1)
 
-    override val isAuthorized = flow {
+    private val isAuthorized = flow {
         checkAuthStateFlow.emit(Unit)
         checkAuthStateFlow.collect {
             val isAuth = prefs.getBoolean(SecurePrefs.IS_AUTHORIZED)
@@ -33,6 +34,8 @@ class AuthRepositoryImpl(context: Context): AuthRepository {
         started = SharingStarted.Lazily,
         initialValue = AuthState.UnAuthorized
     )
+
+    override fun getAuthState() = isAuthorized
 
     override suspend fun loginClicked() {
         prefs.putBoolean(SecurePrefs.IS_AUTHORIZED, true)

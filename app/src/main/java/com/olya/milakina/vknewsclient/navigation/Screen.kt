@@ -1,7 +1,7 @@
 package com.olya.milakina.vknewsclient.navigation
 
 import android.net.Uri
-import com.olya.milakina.vknewsclient.domain.Post
+import com.olya.milakina.vknewsclient.domain.entities.Post
 import com.google.gson.Gson
 
 sealed class Screen(val route: String) {

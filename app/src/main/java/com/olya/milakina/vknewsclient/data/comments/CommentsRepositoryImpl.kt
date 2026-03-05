@@ -1,16 +1,20 @@
 package com.olya.milakina.vknewsclient.data.comments
 
-import com.olya.milakina.vknewsclient.PaginationState
 import com.olya.milakina.vknewsclient.data.ApiFactory
 import com.olya.milakina.vknewsclient.data.comments.model.toDomain
-import com.olya.milakina.vknewsclient.domain.Post
-import com.olya.milakina.vknewsclient.domain.PostComment
+import com.olya.milakina.vknewsclient.domain.entities.PaginationState
+import com.olya.milakina.vknewsclient.domain.entities.Post
+import com.olya.milakina.vknewsclient.domain.entities.PostComment
+import com.olya.milakina.vknewsclient.domain.repositories.CommentsRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.retry
+import kotlinx.coroutines.flow.stateIn
 
 class CommentsRepositoryImpl : CommentsRepository {
 
@@ -22,10 +26,11 @@ class CommentsRepositoryImpl : CommentsRepository {
     private val _comments = mutableListOf<PostComment>()
     private val comments get() = _comments.toList()
 
+    private val scope = CoroutineScope(Dispatchers.IO)
+
     private val nextDataEvents = MutableSharedFlow<Unit>(replay = 1)
 
-
-    override fun loadComments(post: Post): Flow<PaginationState<PostComment>> = flow {
+    override fun loadComments(post: Post) = flow {
         nextDataEvents.emit(Unit)
         nextDataEvents.collect {
             if (comments.isEmpty()) {
@@ -56,7 +61,11 @@ class CommentsRepositoryImpl : CommentsRepository {
         true
     }.catch {
         emit(PaginationState.FailureLoading(it))
-    }
+    }.stateIn(
+        scope = scope,
+        started = SharingStarted.Lazily,
+        initialValue = PaginationState.FirstPageLoading()
+    )
 
     override suspend fun loadNextComments() {
         nextDataEvents.emit(Unit)

@@ -6,7 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.olya.milakina.vknewsclient.domain.Post
+import com.olya.milakina.vknewsclient.domain.entities.Post
 import com.google.gson.Gson
 
 fun NavGraphBuilder.homeScreenNavGraph(

@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.olya.milakina.vknewsclient.domain.AuthState
+import com.olya.milakina.vknewsclient.domain.entities.AuthState
 import com.olya.milakina.vknewsclient.presentation.login.LoginScreen
 import com.olya.milakina.vknewsclient.ui.theme.VkNewsClientTheme
 

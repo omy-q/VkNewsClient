@@ -2,7 +2,7 @@ package com.olya.milakina.vknewsclient.presentation.home.comments
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.olya.milakina.vknewsclient.domain.Post
+import com.olya.milakina.vknewsclient.domain.entities.Post
 
 class CommentsScreenViewModelFactory(private val post: Post) : ViewModelProvider.Factory {
 

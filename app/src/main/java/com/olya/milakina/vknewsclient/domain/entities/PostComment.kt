@@ -1,4 +1,4 @@
-package com.olya.milakina.vknewsclient.domain
+package com.olya.milakina.vknewsclient.domain.entities
 
 import java.util.UUID
 

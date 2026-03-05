@@ -2,10 +2,14 @@ package com.olya.milakina.vknewsclient.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.olya.milakina.vknewsclient.PaginationState
-import com.olya.milakina.vknewsclient.data.posts.PostRepository
+import com.olya.milakina.vknewsclient.domain.entities.PaginationState
+import com.olya.milakina.vknewsclient.domain.repositories.PostRepository
 import com.olya.milakina.vknewsclient.data.posts.PostsRepositoryImpl
-import com.olya.milakina.vknewsclient.domain.Post
+import com.olya.milakina.vknewsclient.domain.entities.Post
+import com.olya.milakina.vknewsclient.domain.usecases.ChangeLikeStatusUseCase
+import com.olya.milakina.vknewsclient.domain.usecases.DeletePostUseCase
+import com.olya.milakina.vknewsclient.domain.usecases.GetPostsUseCase
+import com.olya.milakina.vknewsclient.domain.usecases.LoadNextPostsUseCase
 import com.olya.milakina.vknewsclient.mergeWith
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.delay
@@ -18,6 +22,10 @@ import kotlinx.coroutines.launch
 class HomeScreenViewModel : ViewModel() {
 
     private val repository: PostRepository = PostsRepositoryImpl()
+    private val getPostsUseCase = GetPostsUseCase(repository)
+    private val loadNextPostsUseCase = LoadNextPostsUseCase(repository)
+    private val changeLikeStatusUseCase = ChangeLikeStatusUseCase(repository)
+    private val deletePostUseCase = DeletePostUseCase(repository)
     private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
         isChangeLikeLoading = false
         showToastErrorEvent.tryEmit(Unit)
@@ -36,7 +44,7 @@ class HomeScreenViewModel : ViewModel() {
     private var isChangeLikeLoading: Boolean = false
     private var posts: List<Post> = listOf()
 
-    val screenState = repository.postsFlow
+    val screenState = getPostsUseCase()
         .map {
             when (it) {
                 is PaginationState.FirstPageLoading -> {
@@ -67,7 +75,7 @@ class HomeScreenViewModel : ViewModel() {
 
     fun loadNextPosts() {
         viewModelScope.launch {
-            repository.loadNextPosts()
+            loadNextPostsUseCase()
         }
     }
 
@@ -75,7 +83,7 @@ class HomeScreenViewModel : ViewModel() {
         if (!isChangeLikeLoading) {
             isChangeLikeLoading = true
             viewModelScope.launch(exceptionHandler) {
-                repository.changeLikeStatus(post)
+                changeLikeStatusUseCase(post)
                 isChangeLikeLoading = false
             }
         }
@@ -83,7 +91,7 @@ class HomeScreenViewModel : ViewModel() {
 
     fun deletePost(post: Post) {
         viewModelScope.launch(exceptionHandler) {
-            repository.deletePost(post)
+            deletePostUseCase(post)
         }
     }
 }

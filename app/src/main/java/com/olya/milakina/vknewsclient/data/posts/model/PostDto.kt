@@ -3,9 +3,9 @@ package com.olya.milakina.vknewsclient.data.posts.model
 import com.google.gson.annotations.SerializedName
 import com.olya.milakina.vknewsclient.data.getCount
 import com.olya.milakina.vknewsclient.data.toDomainDate
-import com.olya.milakina.vknewsclient.domain.Post
-import com.olya.milakina.vknewsclient.domain.StatisticItem
-import com.olya.milakina.vknewsclient.domain.StatisticType
+import com.olya.milakina.vknewsclient.domain.entities.Post
+import com.olya.milakina.vknewsclient.domain.entities.StatisticItem
+import com.olya.milakina.vknewsclient.domain.entities.StatisticType
 import java.util.UUID
 import kotlin.random.Random
 

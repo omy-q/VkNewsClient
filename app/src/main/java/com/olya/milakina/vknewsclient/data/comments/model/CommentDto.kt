@@ -2,7 +2,7 @@ package com.olya.milakina.vknewsclient.data.comments.model
 
 import com.google.gson.annotations.SerializedName
 import com.olya.milakina.vknewsclient.data.toDomainDate
-import com.olya.milakina.vknewsclient.domain.PostComment
+import com.olya.milakina.vknewsclient.domain.entities.PostComment
 import java.util.UUID
 
 internal data class CommentDto(
