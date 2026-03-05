@@ -26,7 +26,7 @@ import com.olya.milakina.vknewsclient.R
 import com.olya.milakina.vknewsclient.domain.entities.PostComment
 
 @Composable
-fun PostCommentItem(
+internal fun PostCommentItem(
     comment: PostComment,
     modifier: Modifier = Modifier
 ) {

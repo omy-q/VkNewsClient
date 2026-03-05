@@ -5,8 +5,7 @@ import com.olya.milakina.vknewsclient.data.posts.model.PostsDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-internal interface NewsApi {
-
+internal interface ApiService {
     @GET("top-headlines")
     suspend fun getPosts(
         @Query("page") page: Int,
@@ -20,5 +19,4 @@ internal interface NewsApi {
         @Query("pageSize") pageSize: Int,
         @Query("q") query: String
     ): CommentsDto
-
 }

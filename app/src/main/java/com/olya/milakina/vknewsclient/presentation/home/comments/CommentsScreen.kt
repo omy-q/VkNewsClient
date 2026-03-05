@@ -7,29 +7,32 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.olya.milakina.vknewsclient.R
 import com.olya.milakina.vknewsclient.domain.entities.Post
+import com.olya.milakina.vknewsclient.presentation.NewsClientApplication
 import com.olya.milakina.vknewsclient.ui.theme.DarkBlue
 
 @Composable
-fun CommentsScreen(
+internal fun CommentsScreen(
     post: Post,
     onBackPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Log.d("TEST", "CommentsScreen")
-
-    val viewModel: CommentsScreenViewModel = viewModel(
-        factory = CommentsScreenViewModelFactory(post),
-        key = "postId = ${post.id}"
-    )
+    val component = (LocalContext.current.applicationContext as NewsClientApplication).component
+    val subComponent = remember(post) {
+        component.getCommentsScreenComponentFactory().create(post)
+    }
+    val viewModel: CommentsScreenViewModel = viewModel(factory = subComponent.getCommentsViewModelFactory())
     val state = viewModel.screenState.collectAsState(CommentsScreenState.Initial)
-    when(val currentState = state.value) {
+    when (val currentState = state.value) {
         is CommentsScreenState.Comments -> {
             CommentsUi(
                 isNextPostsLoading = currentState.nextDataIsLoading,

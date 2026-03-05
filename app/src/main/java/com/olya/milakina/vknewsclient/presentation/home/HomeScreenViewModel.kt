@@ -3,8 +3,6 @@ package com.olya.milakina.vknewsclient.presentation.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.olya.milakina.vknewsclient.domain.entities.PaginationState
-import com.olya.milakina.vknewsclient.domain.repositories.PostRepository
-import com.olya.milakina.vknewsclient.data.posts.PostsRepositoryImpl
 import com.olya.milakina.vknewsclient.domain.entities.Post
 import com.olya.milakina.vknewsclient.domain.usecases.ChangeLikeStatusUseCase
 import com.olya.milakina.vknewsclient.domain.usecases.DeletePostUseCase
@@ -18,14 +16,14 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeScreenViewModel : ViewModel() {
-
-    private val repository: PostRepository = PostsRepositoryImpl()
-    private val getPostsUseCase = GetPostsUseCase(repository)
-    private val loadNextPostsUseCase = LoadNextPostsUseCase(repository)
-    private val changeLikeStatusUseCase = ChangeLikeStatusUseCase(repository)
-    private val deletePostUseCase = DeletePostUseCase(repository)
+internal class HomeScreenViewModel @Inject constructor(
+    getPostsUseCase: GetPostsUseCase,
+    private val loadNextPostsUseCase: LoadNextPostsUseCase,
+    private val changeLikeStatusUseCase: ChangeLikeStatusUseCase,
+    private val deletePostUseCase: DeletePostUseCase
+) : ViewModel() {
     private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
         isChangeLikeLoading = false
         showToastErrorEvent.tryEmit(Unit)

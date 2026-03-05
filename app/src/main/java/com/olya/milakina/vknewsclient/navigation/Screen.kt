@@ -4,7 +4,7 @@ import android.net.Uri
 import com.olya.milakina.vknewsclient.domain.entities.Post
 import com.google.gson.Gson
 
-sealed class Screen(val route: String) {
+internal sealed class Screen(val route: String) {
 
     object Home : Screen(route = ROUTE_HOME)
     object Favorite : Screen(route = ROUTE_FAVORITE)
@@ -28,4 +28,4 @@ sealed class Screen(val route: String) {
     }
 }
 
-fun String.encode(): String? = Uri.encode(this)
+internal fun String.encode(): String? = Uri.encode(this)

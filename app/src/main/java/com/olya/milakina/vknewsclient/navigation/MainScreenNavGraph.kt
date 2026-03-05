@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import com.olya.milakina.vknewsclient.domain.entities.Post
 
 @Composable
-fun MainScreenNavGraph(
+internal fun MainScreenNavGraph(
     navHostController: NavHostController,
     favoriteScreenContent: @Composable () -> Unit,
     profileScreenContent: @Composable () -> Unit,

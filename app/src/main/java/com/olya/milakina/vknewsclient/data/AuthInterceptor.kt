@@ -4,7 +4,7 @@ import com.olya.milakina.vknewsclient.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
 
-object AuthInterceptor : Interceptor {
+internal object AuthInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder().apply {

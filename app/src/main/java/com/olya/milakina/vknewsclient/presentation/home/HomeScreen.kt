@@ -16,16 +16,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.olya.milakina.vknewsclient.R
 import com.olya.milakina.vknewsclient.domain.entities.Post
+import com.olya.milakina.vknewsclient.presentation.ViewModelFactory
 import com.olya.milakina.vknewsclient.ui.theme.DarkBlue
 
 @Composable
-fun HomeScreen(
+internal fun HomeScreen(
+    viewModelFactory: ViewModelFactory,
     onCommentClickListener: (post: Post) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Log.d("TEST", "HomeScreen")
 
-    val viewModel: HomeScreenViewModel = viewModel()
+    val viewModel: HomeScreenViewModel = viewModel(factory = viewModelFactory)
     val state = viewModel.screenState.collectAsState(HomeScreenState.Initial)
 
     when (val currentState = state.value) {

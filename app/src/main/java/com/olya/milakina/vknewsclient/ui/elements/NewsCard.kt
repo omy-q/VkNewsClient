@@ -23,7 +23,7 @@ import com.olya.milakina.vknewsclient.domain.entities.Post
 import com.olya.milakina.vknewsclient.domain.entities.StatisticItem
 
 @Composable
-fun NewsCard(
+internal fun NewsCard(
     news: Post,
     onCommentClickListener: () -> Unit,
     onLikeClickListener: (StatisticItem) -> Unit,

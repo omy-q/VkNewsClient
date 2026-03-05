@@ -1,23 +1,24 @@
 [versions]
 agp = "8.12.3"
-kotlin = "2.3.0"
+kotlin = "2.3.10"
 coreKtx = "1.17.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 lifecycle = "2.10.0"
-activityCompose = "1.12.3"
-composeBom = "2026.01.01"
-composeRuntime = "1.10.2"
+activityCompose = "1.12.4"
+composeBom = "2026.02.01"
+composeRuntime = "1.10.4"
 composeNavigation = "2.9.7"
 coil = "2.7.0"
 gson = "2.13.2"
 secretsGradle = "2.0.1"
 securityCrypto = "1.1.0"
 retrofit = "3.0.0"
-okhttp = "4.12.0"
-gson-converter = "2.11.0"
-kotlinx-coroutines = "1.8.1"
+okhttp = "5.3.2"
+gson-converter = "3.0.0"
+kotlinx-coroutines = "1.10.2"
+dagger = "2.59.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -45,10 +46,13 @@ retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = 
 retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "gson-converter" }
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
+dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize" }
 secrets-gradle = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretsGradle" }

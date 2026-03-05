@@ -3,21 +3,23 @@ package com.olya.milakina.vknewsclient.presentation.home.comments
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.olya.milakina.vknewsclient.domain.entities.PaginationState
-import com.olya.milakina.vknewsclient.domain.repositories.CommentsRepository
-import com.olya.milakina.vknewsclient.data.comments.CommentsRepositoryImpl
 import com.olya.milakina.vknewsclient.domain.entities.Post
 import com.olya.milakina.vknewsclient.domain.entities.PostComment
 import com.olya.milakina.vknewsclient.domain.usecases.GetCommentsUseCase
 import com.olya.milakina.vknewsclient.domain.usecases.LoadNextCommentsUseCase
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CommentsScreenViewModel(val post: Post) : ViewModel() {
+internal class CommentsScreenViewModel @Inject constructor(
+    post: Post,
+    getCommentsUseCase: GetCommentsUseCase,
+    private val loadNextCommentsUseCase: LoadNextCommentsUseCase
+) : ViewModel() {
 
-    private val repository: CommentsRepository = CommentsRepositoryImpl()
-    private val getCommentsUseCase = GetCommentsUseCase(repository)
-    private val loadNextCommentsUseCase = LoadNextCommentsUseCase(repository)
     private var comments: List<PostComment> = listOf()
     val screenState = getCommentsUseCase(post)
         .map {
@@ -52,7 +54,13 @@ class CommentsScreenViewModel(val post: Post) : ViewModel() {
                     CommentsScreenState.CommonError
                 }
             }
-        }.onStart { emit(CommentsScreenState.Loading) }
+        }.onStart {
+            emit(CommentsScreenState.Loading)
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = CommentsScreenState.Loading
+        )
 
 
     fun loadNextComments() {

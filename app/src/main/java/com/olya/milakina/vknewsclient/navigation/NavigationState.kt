@@ -7,7 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.olya.milakina.vknewsclient.domain.entities.Post
 
-class NavigationState(
+internal class NavigationState(
     val navHostController: NavHostController
 ) {
     fun navigateTo(route: String) {
@@ -26,7 +26,7 @@ class NavigationState(
 }
 
 @Composable
-fun rememberNavigationState(
+internal fun rememberNavigationState(
     navHostController: NavHostController = rememberNavController()
 ): NavigationState {
     return remember { NavigationState(navHostController) }

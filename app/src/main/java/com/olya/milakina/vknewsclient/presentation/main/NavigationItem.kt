@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.olya.milakina.vknewsclient.R
 import com.olya.milakina.vknewsclient.navigation.Screen
 
-sealed class NavigationItem(
+internal sealed class NavigationItem(
     val screen: Screen,
     val titleResId: Int,
     val icon: ImageVector

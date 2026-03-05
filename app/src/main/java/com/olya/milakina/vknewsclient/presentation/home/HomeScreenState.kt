@@ -2,7 +2,7 @@ package com.olya.milakina.vknewsclient.presentation.home
 
 import com.olya.milakina.vknewsclient.domain.entities.Post
 
-sealed class HomeScreenState {
+internal sealed class HomeScreenState {
     object Initial : HomeScreenState()
     object Loading : HomeScreenState()
     data class Posts(

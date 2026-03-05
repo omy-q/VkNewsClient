@@ -2,8 +2,9 @@ package com.olya.milakina.vknewsclient.domain.usecases
 
 import com.olya.milakina.vknewsclient.domain.entities.Post
 import com.olya.milakina.vknewsclient.domain.repositories.PostRepository
+import javax.inject.Inject
 
-class ChangeLikeStatusUseCase(
+internal class ChangeLikeStatusUseCase @Inject constructor(
     private val repository: PostRepository
 ) {
 

@@ -1,22 +1,18 @@
 package com.olya.milakina.vknewsclient.presentation.main
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.olya.milakina.vknewsclient.domain.repositories.AuthRepository
-import com.olya.milakina.vknewsclient.data.auth.AuthRepositoryImpl
 import com.olya.milakina.vknewsclient.domain.entities.AuthState
 import com.olya.milakina.vknewsclient.domain.usecases.GetAuthStateUseCase
 import com.olya.milakina.vknewsclient.domain.usecases.LoginUseCase
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository: AuthRepository = AuthRepositoryImpl(application)
-    private val getAuthStateUseCase = GetAuthStateUseCase(repository)
-    private val loginUseCase = LoginUseCase(repository)
-
+internal class MainViewModel @Inject constructor(
+    getAuthStateUseCase: GetAuthStateUseCase,
+    private val loginUseCase: LoginUseCase
+) : ViewModel() {
     val authState: StateFlow<AuthState> = getAuthStateUseCase()
 
     fun onLoginClicked() {

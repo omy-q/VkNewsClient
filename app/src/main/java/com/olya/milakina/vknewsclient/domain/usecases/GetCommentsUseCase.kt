@@ -4,13 +4,14 @@ import com.olya.milakina.vknewsclient.domain.entities.PaginationState
 import com.olya.milakina.vknewsclient.domain.entities.Post
 import com.olya.milakina.vknewsclient.domain.entities.PostComment
 import com.olya.milakina.vknewsclient.domain.repositories.CommentsRepository
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class GetCommentsUseCase(
+internal class GetCommentsUseCase @Inject constructor(
     private val repository: CommentsRepository
 ) {
 
-    operator fun invoke(post: Post): StateFlow<PaginationState<PostComment>> {
+    operator fun invoke(post: Post): Flow<PaginationState<PostComment>> {
         return repository.loadComments(post)
     }
 }

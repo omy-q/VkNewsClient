@@ -1,6 +1,6 @@
 package com.olya.milakina.vknewsclient.data.posts
 
-import com.olya.milakina.vknewsclient.data.ApiFactory
+import com.olya.milakina.vknewsclient.data.ApiService
 import com.olya.milakina.vknewsclient.data.getCount
 import com.olya.milakina.vknewsclient.data.posts.model.toDomain
 import com.olya.milakina.vknewsclient.domain.entities.PaginationState
@@ -18,11 +18,11 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.retry
 import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
-class PostsRepositoryImpl : PostRepository {
-
-    private val api = ApiFactory.apiService
-
+internal class PostsRepositoryImpl @Inject constructor(
+    private val api: ApiService
+) : PostRepository {
     private val deletedIds: MutableSet<String> = mutableSetOf()
 
     private var currentPage: Int = 1

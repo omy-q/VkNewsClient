@@ -3,7 +3,7 @@ package com.olya.milakina.vknewsclient.domain.repositories
 import com.olya.milakina.vknewsclient.domain.entities.AuthState
 import kotlinx.coroutines.flow.StateFlow
 
-interface AuthRepository {
+internal interface AuthRepository {
 
     fun getAuthState(): StateFlow<AuthState>
 

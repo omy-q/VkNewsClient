@@ -3,8 +3,9 @@ package com.olya.milakina.vknewsclient.domain.usecases
 import com.olya.milakina.vknewsclient.domain.entities.AuthState
 import com.olya.milakina.vknewsclient.domain.repositories.AuthRepository
 import kotlinx.coroutines.flow.StateFlow
+import javax.inject.Inject
 
-class GetAuthStateUseCase(
+internal class GetAuthStateUseCase @Inject constructor(
     private val repository: AuthRepository
 ) {
 

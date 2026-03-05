@@ -3,10 +3,10 @@ package com.olya.milakina.vknewsclient.domain.repositories
 import com.olya.milakina.vknewsclient.domain.entities.PaginationState
 import com.olya.milakina.vknewsclient.domain.entities.PostComment
 import com.olya.milakina.vknewsclient.domain.entities.Post
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
-interface CommentsRepository {
+internal interface CommentsRepository {
 
-    fun loadComments(post: Post): StateFlow<PaginationState<PostComment>>
+    fun loadComments(post: Post): Flow<PaginationState<PostComment>>
     suspend fun loadNextComments()
 }

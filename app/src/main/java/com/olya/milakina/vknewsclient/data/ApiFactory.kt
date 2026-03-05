@@ -21,5 +21,5 @@ internal object ApiFactory {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val apiService: NewsApi = retrofit.create()
+    val apiService: ApiService = retrofit.create()
 }

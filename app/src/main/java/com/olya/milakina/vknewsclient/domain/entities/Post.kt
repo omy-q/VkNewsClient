@@ -2,7 +2,7 @@ package com.olya.milakina.vknewsclient.domain.entities
 
 import java.util.UUID
 
-data class Post(
+internal data class Post(
     val id: UUID,
     val authorName: String?,
     val title: String,

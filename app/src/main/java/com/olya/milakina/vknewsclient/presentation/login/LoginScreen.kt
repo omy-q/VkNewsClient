@@ -20,7 +20,7 @@ import com.olya.milakina.vknewsclient.R
 import com.olya.milakina.vknewsclient.ui.theme.DarkBlue
 
 @Composable
-fun LoginScreen(
+internal fun LoginScreen(
     onLoginClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {

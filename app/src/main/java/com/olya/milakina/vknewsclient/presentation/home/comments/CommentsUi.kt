@@ -30,7 +30,7 @@ import com.olya.milakina.vknewsclient.ui.theme.DarkBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CommentsUi(
+internal fun CommentsUi(
     isNextPostsLoading: Boolean,
     onScrollToBottom: () -> Unit,
     comments: List<PostComment>,

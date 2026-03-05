@@ -22,7 +22,7 @@ import com.olya.milakina.vknewsclient.ui.elements.NewsCard
 import com.olya.milakina.vknewsclient.ui.theme.DarkBlue
 
 @Composable
-fun HomeUi(
+internal fun HomeUi(
     posts: List<Post>,
     isNextPostsLoading: Boolean,
     onScrollToBottom: () -> Unit,

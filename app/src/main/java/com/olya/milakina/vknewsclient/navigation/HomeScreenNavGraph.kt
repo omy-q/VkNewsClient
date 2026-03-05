@@ -9,7 +9,7 @@ import androidx.navigation.navigation
 import com.olya.milakina.vknewsclient.domain.entities.Post
 import com.google.gson.Gson
 
-fun NavGraphBuilder.homeScreenNavGraph(
+internal fun NavGraphBuilder.homeScreenNavGraph(
     postsScreenContent: @Composable () -> Unit,
     commentsScreenContent: @Composable (post: Post) -> Unit,
 ) {

@@ -2,7 +2,7 @@ package com.olya.milakina.vknewsclient.domain.entities
 
 import java.util.UUID
 
-data class PostComment(
+internal data class PostComment(
     val id: UUID,
     val authorName: String,
     val authorIcon: String?,
