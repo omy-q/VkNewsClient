@@ -6,17 +6,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.olya.milakina.vknewsclient.R
 import com.olya.milakina.vknewsclient.domain.entities.Post
-import com.olya.milakina.vknewsclient.presentation.NewsClientApplication
+import com.olya.milakina.vknewsclient.presentation.getApplicationComponent
 import com.olya.milakina.vknewsclient.ui.theme.DarkBlue
 
 @Composable
@@ -26,13 +25,30 @@ internal fun CommentsScreen(
     modifier: Modifier = Modifier
 ) {
     Log.d("TEST", "CommentsScreen")
-    val component = (LocalContext.current.applicationContext as NewsClientApplication).component
-    val subComponent = remember(post) {
-        component.getCommentsScreenComponentFactory().create(post)
-    }
-    val viewModel: CommentsScreenViewModel = viewModel(factory = subComponent.getCommentsViewModelFactory())
+
+    val component = getApplicationComponent().getCommentsScreenComponentFactory().create(post)
+    val viewModel: CommentsScreenViewModel = viewModel(factory = component.getCommentsViewModelFactory())
     val state = viewModel.screenState.collectAsState(CommentsScreenState.Initial)
-    when (val currentState = state.value) {
+
+    CommentsScreenContent(
+        screenState = state,
+        viewModel = viewModel,
+        onBackPressed = onBackPressed,
+        modifier = modifier
+    )
+}
+
+@Composable
+private fun CommentsScreenContent(
+    screenState: State<CommentsScreenState>,
+    viewModel: CommentsScreenViewModel,
+    onBackPressed: () -> Unit,
+    modifier: Modifier = Modifier
+
+) {
+    Log.d("TEST", "CommentsScreenContent")
+
+    when (val currentState = screenState.value) {
         is CommentsScreenState.Comments -> {
             CommentsUi(
                 isNextPostsLoading = currentState.nextDataIsLoading,

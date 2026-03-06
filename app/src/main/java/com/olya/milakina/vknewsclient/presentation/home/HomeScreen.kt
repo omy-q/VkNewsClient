@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,21 +17,38 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.olya.milakina.vknewsclient.R
 import com.olya.milakina.vknewsclient.domain.entities.Post
-import com.olya.milakina.vknewsclient.presentation.ViewModelFactory
+import com.olya.milakina.vknewsclient.presentation.getApplicationComponent
 import com.olya.milakina.vknewsclient.ui.theme.DarkBlue
 
 @Composable
 internal fun HomeScreen(
-    viewModelFactory: ViewModelFactory,
     onCommentClickListener: (post: Post) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Log.d("TEST", "HomeScreen")
 
-    val viewModel: HomeScreenViewModel = viewModel(factory = viewModelFactory)
+    val component = getApplicationComponent()
+    val viewModel: HomeScreenViewModel = viewModel(factory = component.getViewModelFactory())
     val state = viewModel.screenState.collectAsState(HomeScreenState.Initial)
 
-    when (val currentState = state.value) {
+    HomeScreenContent(
+        screenSate = state,
+        viewModel = viewModel,
+        onCommentClickListener = onCommentClickListener,
+        modifier = modifier
+    )
+}
+
+@Composable
+private fun HomeScreenContent(
+    screenSate: State<HomeScreenState>,
+    viewModel: HomeScreenViewModel,
+    onCommentClickListener: (post: Post) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Log.d("TEST", "HomeScreenContent")
+
+    when (val currentState = screenSate.value) {
         is HomeScreenState.Posts -> {
             HomeUi(
                 posts = currentState.posts,

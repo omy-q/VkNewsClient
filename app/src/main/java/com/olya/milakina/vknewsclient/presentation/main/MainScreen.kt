@@ -18,7 +18,6 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.olya.milakina.vknewsclient.navigation.MainScreenNavGraph
 import com.olya.milakina.vknewsclient.navigation.rememberNavigationState
-import com.olya.milakina.vknewsclient.presentation.ViewModelFactory
 import com.olya.milakina.vknewsclient.presentation.favorite.FavoriteScreen
 import com.olya.milakina.vknewsclient.presentation.home.HomeScreen
 import com.olya.milakina.vknewsclient.presentation.home.comments.CommentsScreen
@@ -26,7 +25,6 @@ import com.olya.milakina.vknewsclient.presentation.profile.ProfileScreen
 
 @Composable
 internal fun MainScreen(
-    viewModelFactory: ViewModelFactory,
     modifier: Modifier = Modifier
 ) {
     Log.d("TEST", "MainScreen")
@@ -81,7 +79,6 @@ internal fun MainScreen(
             profileScreenContent = { ProfileScreen(modifier = Modifier.padding(innerPadding)) },
             postsScreenContent = {
                 HomeScreen(
-                    viewModelFactory = viewModelFactory,
                     onCommentClickListener = { navigationState.navigateToComments(it) },
                     modifier = Modifier.padding(innerPadding)
                 )

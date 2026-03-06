@@ -1,7 +1,9 @@
 package com.olya.milakina.vknewsclient.domain.entities
 
+import androidx.compose.runtime.Immutable
 import java.util.UUID
 
+@Immutable
 internal data class Post(
     val id: UUID,
     val authorName: String?,
